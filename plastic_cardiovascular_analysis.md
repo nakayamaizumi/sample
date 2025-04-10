@@ -6,10 +6,14 @@
 ## 📌 セクション 1: データの準備と可視化
 
 ### Web R 
+Web Rにアクセス
 [Web R](https://webr.r-wasm.org/latest/)
 
+
 演習用データ(plastic_2025.csv)をWeb Rにuploadする
+
 <img src="images/file upload on web R.png" alt="WebRにデータをupload" width="600px">
+
 
 ### ライブラリの読み込み
 
