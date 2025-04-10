@@ -49,11 +49,12 @@ data_plastic <- df_plastic %>%
 ### データを確認
 
 データの先頭の数行を表示して内容を確認します。
+- `head()`: データの先頭数行を表示します。
+- `str()`: データの構造(structure)を概観します。
 
 ```R
 head(data_plastic, n = 30) %>% utils::View(title = "最初の30行")
 str(data_plastic)
-head(data_plastic, n = 2) %>% utils::View(title = "データ例")
 ```
 
 ### 分布の可視化
@@ -87,15 +88,31 @@ data_plastic %>%
   theme_bw()
 ```
 
+**IL1bの分布**
+
+```R
+data_plastic %>% 
+  ggplot(aes(x = IL1b)) +
+  geom_histogram(bins = 30, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
+  theme_bw()
+
+
+data_plastic %>% 
+  ggplot(aes(x = IL1b)) +
+  geom_boxplot(width = 0.2, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
+  theme_bw()
+```
+### 分布の可視化
+各変数の統計要約を表で表示します。
+- `table1()`: 各変数の要約値を算出し、表形式で出力します。
+
+```R
+table1(~ age + IL1b, data = data_plastic)
+```
 ---
 
 ## 📌 セクション 2: 推測統計
-
-### MNPの有無による心血管疾患の比較
-
-```R
-table1(~ 心血管疾患 | MNPありなし, data = data_plastic)
-```
+---
 
 ### IL1bの推測統計
 
@@ -107,7 +124,27 @@ sd_il1b <- sd(data_plastic$IL1b)
 sd_il1b/sqrt(257)
 ```
 
-### 平均値差の検定
+**IL1bの標本平均の分布の可視化**
+- `curve()`: 指定した曲線を描く。
+- `dnorm()`: 平均と標準偏差をinputすると、対応する正規分布を描く。
+
+```R
+curve(dnorm(x, mean(data_plastic$IL1b), sd_il1b/sqrt(257)), from = 0, to = 1500)
+```
+**IL1bの分布の可視化（再掲）**
+
+```R
+data_plastic %>% 
+  ggplot(aes(x = IL1b)) +
+  geom_histogram(bins = 30, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
+  xlim(0, 1500) +
+  theme_bw()
+```
+
+### MNP有無によるIL1bの平均値差の検定
+
+- **broom**: 統計結果を整然データに変換するパッケージ。
+- `tidy()`: 統計解析の結果を整然（tidy）な形式に変換します。
 
 ```R
 library(broom)
@@ -118,7 +155,7 @@ t.test(IL1b ~ MNPありなし, data = data_plastic) %>%
   utils::View(title = "IL1bの平均値差の検定")
 ```
 
-### 心血管疾患の割合差の検定
+### MNP有無による心血管疾患の割合差の検定
 
 ```R
 prop.test(table(data_plastic$MNPありなし, data_plastic$心血管疾患)) %>% 
