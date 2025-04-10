@@ -112,7 +112,7 @@ data_plastic %>%
   geom_boxplot(width = 0.2, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
   theme_bw()
 ```
-### 分布の可視化
+### 記述統計量
 各変数の統計要約を表で表示します。
 - `table1()`: 各変数の要約値を算出し、表形式で出力します。
 
