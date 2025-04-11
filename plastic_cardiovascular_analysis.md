@@ -168,5 +168,6 @@ t.test(IL1b ~ MNPありなし, data = data_plastic) %>%
 
 ```R
 prop.test(table(data_plastic$MNPありなし, data_plastic$心血管疾患)) %>% 
-  broom::tidy()
+  broom::tidy() %>% 
+  utils::View(title = "心血管疾患の割合差の検定")
 ```
