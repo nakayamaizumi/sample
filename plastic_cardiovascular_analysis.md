@@ -10,7 +10,7 @@
 webブラウザはChromeが推奨です。  
 疫学予防医学の講義資料から演習用データ(plastic_2025.csv)をダウンロード。  
 
-新しいタブまたはwindowで以下を開いてください
+新しいタブまたはwindowで以下を開いてください  
 <a href="https://webr.r-wasm.org/latest/" target="_blank">Web R website にアクセス</a>  
 
 演習用データ(plastic_2025.csv)をWeb Rにuploadする  
