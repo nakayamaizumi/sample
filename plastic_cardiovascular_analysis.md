@@ -20,10 +20,14 @@
 
 - **tidyverse**: データ操作と可視化を簡単にするライブラリの集合。
 - **table1**: データの要約統計を見やすい表形式で表示するライブラリ。
-
+- **DT**: データを表示したり操作したりするためのライブラリ。
+- **plotly**: 描画したグラフを見やすく表示するライブラリ。
+    
 ```R
 library(tidyverse)
 library(table1)
+library(DT)
+library(plotly)
 ```
 
 ### データの読み込み
@@ -62,7 +66,11 @@ data_plastic <- df_plastic %>%
 - `str()`: データの構造(structure)を概観します。
 
 ```R
+#windows
 head(data_plastic, n = 30) %>% utils::View(title = "最初の30行")
+#mac
+head(data_plastic, n = 30) %>% datatable()
+
 str(data_plastic)
 ```
 
@@ -84,32 +92,40 @@ str(data_plastic)
 **年齢の分布**
 
 ```R
-data_plastic %>% 
+
+age_hist <- data_plastic %>% 
   ggplot(aes(x = age)) +
   geom_histogram(bins = 30, fill = "#00AFBB", color = "black", alpha = 0.6) +
   scale_x_continuous(limits = c(40, 100)) +
   theme_bw()
 
-data_plastic %>% 
+ggplotly(age_hist)
+
+age_box <- data_plastic %>% 
   ggplot(aes(x = age)) +
   geom_boxplot(width = 0.2, fill = "#00AFBB", color = "black", alpha = 0.6) +
   scale_x_continuous(limits = c(40, 100)) +
   theme_bw()
+
+ggplotly(age_box)
 ```
 
 **IL1bの分布**
 
 ```R
-data_plastic %>% 
+il1b_hist <- data_plastic %>% 
   ggplot(aes(x = IL1b)) +
   geom_histogram(bins = 30, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
   theme_bw()
 
+ggplotly(il1b_hist)
 
-data_plastic %>% 
+il1b_box <- data_plastic %>% 
   ggplot(aes(x = IL1b)) +
   geom_boxplot(width = 0.2, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
   theme_bw()
+
+ggplotly(il1b_box)
 ```
 ### 記述統計量
 各変数の統計要約を表で表示します。
@@ -138,16 +154,13 @@ sd_il1b/sqrt(257)
 - `dnorm()`: 平均と標準偏差をinputすると、対応する正規分布を描く。
 
 ```R
+# mac/safari の場合は省略
 curve(dnorm(x, mean(data_plastic$IL1b), sd_il1b/sqrt(257)), from = 0, to = 1500)
 ```
 **IL1bの分布の可視化（再掲）**
 
 ```R
-data_plastic %>% 
-  ggplot(aes(x = IL1b)) +
-  geom_histogram(bins = 30, fill = "#FFDB6D", color = "#C4961A", alpha = 0.6) +
-  xlim(0, 1500) +
-  theme_bw()
+ggplotly(il1b_hist)
 ```
 
 ### MNP有無によるIL1bの平均値差の検定
@@ -161,7 +174,7 @@ library(broom)
 t.test(IL1b ~ MNPありなし, data = data_plastic) %>% 
   broom::tidy() %>% 
   mutate_if(is.numeric, round, 6) %>% 
-  utils::View(title = "IL1bの平均値差の検定")
+  datatable()
 ```
 
 ### MNP有無による心血管疾患の割合差の検定
@@ -169,5 +182,5 @@ t.test(IL1b ~ MNPありなし, data = data_plastic) %>%
 ```R
 prop.test(table(data_plastic$MNPありなし, data_plastic$心血管疾患)) %>% 
   broom::tidy() %>% 
-  utils::View(title = "心血管疾患の割合差の検定")
+  datatable()
 ```
