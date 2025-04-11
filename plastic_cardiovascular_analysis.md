@@ -7,8 +7,7 @@
 
 ### Web R 
 
-[Web R](https://webr.r-wasm.org/latest/) にアクセス
-
+<a href="https://webr.r-wasm.org/latest/" target="_blank">Web R website にアクセス</a>
 
 演習用データ(plastic_2025.csv)をWeb Rにuploadする
 
