@@ -64,7 +64,7 @@ data_plastic <- df_plastic %>%
 データの先頭の数行を表示して内容を確認します。
 - `head()`: データの先頭数行を表示します。
 - `str()`: データの構造(structure)を概観します。
-
+- `datatable()`: データを操作できる形で表示します。
 ```R
 #windows
 head(data_plastic, n = 30) %>% utils::View(title = "最初の30行")
@@ -89,7 +89,8 @@ str(data_plastic)
 - `geom_boxplot()`: 箱ひげ図を描画します。
   - `width`: 箱の幅を指定。
 - `xlim`: 横軸の表示範囲を指定します。
-
+- `ggplotly`: ggplot関数で作成したグラフをweb表示します。
+  
 **年齢の分布**
 
 ```R
@@ -143,6 +144,9 @@ table1(~ age + IL1b, data = data_plastic)
 ### IL1bの推測統計
 
 平均値と標準偏差を計算し、標本平均の標準誤差を算出します。
+- `mean()`: 算術平均を算出。
+- `sd()`: 標準偏差を算出。
+- `sqrt()`: 平方根を算出。
 
 ```R
 mean(data_plastic$IL1b)
