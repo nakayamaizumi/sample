@@ -68,6 +68,7 @@ data_plastic <- df_plastic %>%
 ```R
 #windows
 head(data_plastic, n = 30) %>% utils::View(title = "最初の30行")
+
 #mac
 head(data_plastic, n = 30) %>% datatable()
 
